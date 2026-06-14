@@ -1,57 +1,68 @@
-# Host TalkDrove Pro (HTD-X)
+# Host TalkDrive Pro (HTD-X)
 
-A production-ready SaaS platform for managing WhatsApp bots on a Linux VPS.
+A production-ready SaaS platform for managing WhatsApp bots on Linux VPS without requiring Pterodactyl Wings.
 
-## Project Overview
+## Phase 1: Core Authentication System
 
-HTD-X allows users to:
-- Upload WhatsApp bot ZIP files
-- Extract and manage bot files
-- Edit bot configurations and environment variables
-- Install dependencies using npm
-- Deploy bots using PM2
-- Monitor resource usage in real-time
-- View live console logs
-- Manage subscription limits
+### Completed
 
-## Tech Stack
+✅ JWT Authentication (Access + Refresh tokens)  
+✅ User Registration with strong password validation  
+✅ Email Verification via SMTP  
+✅ Login with session tracking  
+✅ Password Reset functionality  
+✅ Account suspension support  
+✅ Role-based access control (SUPER_ADMIN, MODERATOR, USER)  
+✅ Comprehensive error handling  
+✅ Activity logging for audit trails  
+✅ Type-safe TypeScript throughout  
 
-**Backend:** Node.js, TypeScript, Express.js, Socket.IO, MySQL, Prisma ORM
-**Frontend:** Next.js, TypeScript, TailwindCSS, Glassmorphism Dark Theme
-**Infrastructure:** Ubuntu 24.04, Nginx, PM2, Certbot SSL
+### Quick Start
 
-## Project Structure
-
-```
-htdx/
-├── backend/              # Express.js backend application
-├── frontend/             # Next.js frontend application
-├── database/             # Prisma schema and migrations
-├── scripts/              # Deployment and utility scripts
-├── nginx/                # Nginx configuration files
-├── docs/                 # Project documentation
-├── uploads/              # Temporary upload storage
-├── storage/              # Persistent bot storage
-└── logs/                 # Application logs
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Configure your database and SMTP credentials in .env
+npm run prisma:generate
+npm run prisma:migrate
+npm run dev
 ```
 
-## Development Phases
+### API Endpoints
 
-- **Phase 1:** Architecture, Database Design, Authentication Backend
-- **Phase 2:** Frontend Authentication & Dashboard Layout
-- **Phase 3:** ZIP Upload & Extraction System
-- **Phase 4:** File Manager & Environment Variable Editor
-- **Phase 5:** Dependency Installer
-- **Phase 6:** PM2 Deployment Engine
-- **Phase 7:** Real-Time Console with Socket.IO
-- **Phase 8:** Resource Monitoring System
-- **Phase 9:** Admin Panel & Subscription Management
-- **Phase 10:** Production Deployment
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/refresh` - Refresh access token
+- `POST /api/auth/verify-email` - Verify email
+- `POST /api/auth/forgot-password` - Request password reset
+- `POST /api/auth/reset-password` - Reset password
+- `POST /api/auth/logout` - User logout (protected)
 
-## Getting Started
+### Security Features
 
-See `docs/SETUP.md` for detailed installation instructions.
+- bcrypt password hashing (12 rounds)
+- JWT token management with expiration
+- SQL injection prevention via Prisma ORM
+- Email validation
+- Strong password enforcement
+- Rate limiting ready
+- CORS protection
 
-## License
+### Database
 
-Proprietary - Host TalkDrove Pro
+MySQL with Prisma ORM. Schema includes:
+
+- Users with roles and subscription plans
+- JWT Refresh tokens
+- Email verification tokens
+- Password reset tokens
+- Activity audit logs
+- Subscription plan configurations
+
+### Next Phase
+
+Phase 2 will include:
+- Frontend authentication pages (Login, Register, Verify Email, Reset Password)
+- User dashboard layout with Glassmorphism dark theme
+- Mobile-first responsive design
